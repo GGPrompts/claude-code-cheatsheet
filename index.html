@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code Cheat Sheet for Windows Users</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        h3 {
+            color: #7f8c8d;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .path-input-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .path-input-section label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .path-input-section input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        
+        .path-input-section .help-text {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .command-section {
+            margin-bottom: 25px;
+        }
+        
+        .command-block {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .command-block h4 {
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .command-block p {
+            color: #6c757d;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .code-wrapper {
+            position: relative;
+            margin-top: 10px;
+        }
+        
+        code {
+            display: block;
+            background-color: #263238;
+            color: #aed581;
+            padding: 12px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            white-space: pre;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.2s;
+        }
+        
+        .copy-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .copy-btn.copied {
+            background-color: #28a745;
+        }
+        
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .warning h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .warning p {
+            color: #856404;
+            margin-bottom: 5px;
+        }
+        
+        .tip {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .tip h4 {
+            color: #0c5460;
+            margin-bottom: 10px;
+        }
+        
+        .tip p {
+            color: #0c5460;
+            margin-bottom: 5px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .comparison-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .comparison-table td code {
+            display: inline;
+            background-color: #f8f9fa;
+            color: #e83e8c;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 13px;
+        }
+        
+        .path-replaceable {
+            color: #0066cc;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Claude Code Cheat Sheet for Windows Users</h1>
+        
+        <div class="path-input-section">
+            <label for="homePath">Your Home Directory Path:</label>
+            <input type="text" id="homePath" placeholder="e.g., /home/username or /mnt/c/Users/YourName">
+            <div class="help-text">
+                Enter your home directory path to automatically update all commands below. 
+                In WSL, this is typically <code>/home/username</code>. 
+                To find yours, type <code>echo $HOME</code> or <code>pwd</code> when you first open Claude Code.
+                <br><strong>Note:</strong> In Termux, this will be something like <code>/data/data/com.termux/files/home</code>
+            </div>
+        </div>
+
+        <h2>🗂️ Navigation Commands</h2>
+        
+        <div class="command-section">
+            <div class="command-block">
+                <h4>Show Current Directory</h4>
+                <p>Like showing the address bar in Windows Explorer</p>
+                <div class="code-wrapper">
+                    <code>pwd</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+            </div>
+            
+            <div class="command-block">
+                <h4>List Files and Folders</h4>
+                <p>Like viewing files in Windows Explorer</p>
+                <div class="code-wrapper">
+                    <code>ls</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+                <p>For detailed view (like Details view in Windows):</p>
+                <div class="code-wrapper">
+                    <code>ls -la</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+            </div>
+            
+            <div class="command-block">
+                <h4>Change Directory</h4>
+                <p>Like double-clicking a folder in Windows</p>
+                <div class="code-wrapper">
+                    <code>cd <span class="path-replaceable">/home/username</span>/Documents</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+                <p>Go up one level (like clicking the up arrow):</p>
+                <div class="code-wrapper">
+                    <code>cd ..</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+                <p>Go to home directory:</p>
+                <div class="code-wrapper">
+                    <code>cd ~</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <h2>📁 File Operations</h2>
+        
+        <div class="command-section">
+            <div class="command-block">
+                <h4>Create a New Folder</h4>
+                <p>Like right-click → New → Folder</p>
+                <div class="code-wrapper">
+                    <code>mkdir my-project</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+            </div>
+            
+            <div class="command-block">
+                <h4>Create a New File</h4>
+                <p>Like right-click → New → Text Document</p>
+                <div class="code-wrapper">
+                    <code>touch myfile.txt</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+            </div>
+            
+            <div class="command-block">
+                <h4>Copy Files</h4>
+                <p>Like Ctrl+C, Ctrl+V in Windows</p>
+                <div class="code-wrapper">
+                    <code>cp source.txt destination.txt</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+                <p>Copy entire folder:</p>
+                <div class="code-wrapper">
+                    <code>cp -r source-folder destination-folder</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+            </div>
+            
+            <div class="command-block">
+                <h4>Move/Rename Files</h4>
+                <p>Like cut-paste or F2 rename in Windows</p>
+                <div class="code-wrapper">
+                    <code>mv oldname.txt newname.txt</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+            </div>
+            
+            <div class="command-block">
+                <h4>Delete Files</h4>
+                <p>Like pressing Delete key</p>
+                <div class="code-wrapper">
+                    <code>rm filename.txt</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+                <p>Delete folder and contents (use with caution!):</p>
+                <div class="code-wrapper">
+                    <code>rm -rf foldername</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <h2>🔍 Quick Command Comparison</h2>
+        
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Windows (CMD/PowerShell)</th>
+                    <th>Linux/Bash</th>
+                    <th>What it does</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>dir</code></td>
+                    <td><code>ls</code></td>
+                    <td>List files</td>
+                </tr>
+                <tr>
+                    <td><code>cd</code></td>
+                    <td><code>cd</code></td>
+                    <td>Change directory</td>
+                </tr>
+                <tr>
+                    <td><code>mkdir</code></td>
+                    <td><code>mkdir</code></td>
+                    <td>Create directory</td>
+                </tr>
+                <tr>
+                    <td><code>del</code></td>
+                    <td><code>rm</code></td>
+                    <td>Delete file</td>
+                </tr>
+                <tr>
+                    <td><code>copy</code></td>
+                    <td><code>cp</code></td>
+                    <td>Copy file</td>
+                </tr>
+                <tr>
+                    <td><code>move</code></td>
+                    <td><code>mv</code></td>
+                    <td>Move/rename file</td>
+                </tr>
+                <tr>
+                    <td><code>type</code></td>
+                    <td><code>cat</code></td>
+                    <td>Display file contents</td>
+                </tr>
+                <tr>
+                    <td><code>cls</code></td>
+                    <td><code>clear</code></td>
+                    <td>Clear screen</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>⚠️ Critical WSL/Windows Tips</h2>
+        
+        <div class="warning">
+            <h4>🚨 Line Ending Issues</h4>
+            <p>Windows uses CRLF (\r\n) while Linux uses LF (\n) for line endings.</p>
+            <p><strong>To avoid issues:</strong></p>
+            <p>• Configure Git: <code>git config --global core.autocrlf input</code></p>
+            <p>• Use WSL for all development, avoid editing in Windows</p>
+            <p>• If you must use Windows editors, ensure they're set to use LF endings</p>
+        </div>
+        
+        <div class="warning">
+            <h4>🚨 File Permissions</h4>
+            <p>Windows doesn't handle Linux file permissions well.</p>
+            <p><strong>Best practices:</strong></p>
+            <p>• Keep your code in the WSL filesystem: <code><span class="path-replaceable">/home/username</span>/projects</code></p>
+            <p>• Avoid storing code in Windows paths like <code>/mnt/c/</code></p>
+            <p>• If you see permission errors, use: <code>chmod +x filename</code></p>
+        </div>
+        
+        <div class="tip">
+            <h4>💡 Accessing Windows Files from WSL</h4>
+            <p>• Windows C: drive is at: <code>/mnt/c/</code></p>
+            <p>• Your Windows user folder: <code>/mnt/c/Users/YourWindowsUsername/</code></p>
+            <p>• But remember: keep development files in WSL for best performance!</p>
+        </div>
+        
+        <div class="tip">
+            <h4>💡 Opening Windows Explorer from WSL</h4>
+            <p>Open current directory in Windows Explorer:</p>
+            <div class="code-wrapper">
+                <code>explorer.exe .</code>
+                <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+            </div>
+        </div>
+
+        <h2>🛠️ Common Claude Code Commands</h2>
+        
+        <div class="command-section">
+            <div class="command-block">
+                <h4>Ask Claude to read a file</h4>
+                <div class="code-wrapper">
+                    <code>Please read <span class="path-replaceable">/home/username</span>/myproject/index.js</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+            </div>
+            
+            <div class="command-block">
+                <h4>Ask Claude to edit a file</h4>
+                <div class="code-wrapper">
+                    <code>Please edit the function in <span class="path-replaceable">/home/username</span>/myproject/app.js</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+            </div>
+            
+            <div class="command-block">
+                <h4>Search for files</h4>
+                <div class="code-wrapper">
+                    <code>Find all .js files in my project</code>
+                    <button class="copy-btn" onclick="copyToClipboard(this)">Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <h2>🎯 Quick Tips</h2>
+        
+        <div class="tip">
+            <h4>Essential Shortcuts</h4>
+            <p>• Tab completion: Start typing a filename and press Tab</p>
+            <p>• History: Press ↑ arrow to see previous commands</p>
+            <p>• Cancel command: Press Ctrl+C</p>
+            <p>• Clear screen: Type <code>clear</code> or press Ctrl+L</p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize with default path
+        const defaultPath = '/home/username';
+        
+        // Update all path references when user enters their path
+        document.getElementById('homePath').addEventListener('input', function(e) {
+            const userPath = e.target.value || defaultPath;
+            updatePaths(userPath);
+        });
+        
+        function updatePaths(newPath) {
+            // Remove trailing slash if present
+            newPath = newPath.replace(/\/$/, '');
+            
+            // Update all elements with path-replaceable class
+            const elements = document.querySelectorAll('.path-replaceable');
+            elements.forEach(el => {
+                el.textContent = newPath;
+            });
+        }
+        
+        // Copy to clipboard functionality
+        function copyToClipboard(button) {
+            const codeElement = button.previousElementSibling;
+            const textToCopy = codeElement.textContent;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                // Change button text temporarily
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    button.textContent = 'Copied!';
+                    button.classList.add('copied');
+                    
+                    setTimeout(() => {
+                        button.textContent = 'Copy';
+                        button.classList.remove('copied');
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+                
+                document.body.removeChild(textArea);
+            });
+        }
+    </script>
+</body>
+</html>
