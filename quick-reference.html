@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux & Development Quick Reference</title>
+    <style>
+        :root {
+            --bg-dark: #1e1e1e;
+            --bg-card: #252526;
+            --text-primary: #cccccc;
+            --text-secondary: #999999;
+            --accent: #569cd6;
+            --accent-hover: #4db8ff;
+            --border: #3e3e42;
+            --code-bg: #1e1e1e;
+            --success: #4ec9b0;
+            --warning: #dcdcaa;
+            --danger: #f48771;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--accent);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2.5em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .command-group {
+            margin-bottom: 15px;
+        }
+
+        .command-group h3 {
+            color: var(--warning);
+            font-size: 1.1em;
+            margin-bottom: 8px;
+        }
+
+        .command {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 8px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .command:hover {
+            background-color: #2d2d30;
+        }
+
+        .command code {
+            color: var(--success);
+            font-size: 0.95em;
+        }
+
+        .command .description {
+            color: var(--text-secondary);
+            font-size: 0.9em;
+            margin-left: 15px;
+        }
+
+        .copy-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: background-color 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+        }
+
+        .add-command {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .add-command:hover {
+            transform: scale(1.1);
+            background: var(--accent-hover);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .modal input, .modal select, .modal textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            border-radius: 4px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .modal button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .save-btn {
+            background: var(--success);
+            color: white;
+        }
+
+        .cancel-btn {
+            background: var(--danger);
+            color: white;
+        }
+
+        .search-box {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .search-box input {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+            border-radius: 8px;
+            font-size: 1.1em;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Linux & Development Quick Reference</h1>
+        
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search commands..." />
+        </div>
+
+        <div class="grid" id="commandGrid">
+            <!-- Navigation & File Management -->
+            <div class="card" data-category="navigation">
+                <h2>📁 Navigation & File Management</h2>
+                <div class="command-group">
+                    <div class="command" onclick="copyCommand('pwd')">
+                        <div>
+                            <code>pwd</code>
+                            <span class="description">Print working directory</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('ls -la')">
+                        <div>
+                            <code>ls -la</code>
+                            <span class="description">List all files with details</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('cd /path/to/directory')">
+                        <div>
+                            <code>cd /path/to/directory</code>
+                            <span class="description">Change directory</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('cd ..')">
+                        <div>
+                            <code>cd ..</code>
+                            <span class="description">Go up one directory</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('mkdir new-folder')">
+                        <div>
+                            <code>mkdir new-folder</code>
+                            <span class="description">Create new directory</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('rm -rf folder-name')">
+                        <div>
+                            <code>rm -rf folder-name</code>
+                            <span class="description">Remove directory and contents</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Git Commands -->
+            <div class="card" data-category="git">
+                <h2>🌿 Git Commands</h2>
+                <div class="command-group">
+                    <div class="command" onclick="copyCommand('git status')">
+                        <div>
+                            <code>git status</code>
+                            <span class="description">Check repository status</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('git add .')">
+                        <div>
+                            <code>git add .</code>
+                            <span class="description">Stage all changes</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('git commit -m &quot;message&quot;')">
+                        <div>
+                            <code>git commit -m "message"</code>
+                            <span class="description">Commit with message</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('git push')">
+                        <div>
+                            <code>git push</code>
+                            <span class="description">Push to remote</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('git pull')">
+                        <div>
+                            <code>git pull</code>
+                            <span class="description">Pull from remote</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('git checkout -b new-branch')">
+                        <div>
+                            <code>git checkout -b new-branch</code>
+                            <span class="description">Create and switch to new branch</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Docker Commands -->
+            <div class="card" data-category="docker">
+                <h2>🐳 Docker Commands</h2>
+                <div class="command-group">
+                    <div class="command" onclick="copyCommand('docker compose up -d')">
+                        <div>
+                            <code>docker compose up -d</code>
+                            <span class="description">Start containers in background</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('docker compose down')">
+                        <div>
+                            <code>docker compose down</code>
+                            <span class="description">Stop all containers</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('docker compose logs -f')">
+                        <div>
+                            <code>docker compose logs -f</code>
+                            <span class="description">Follow container logs</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('docker ps')">
+                        <div>
+                            <code>docker ps</code>
+                            <span class="description">List running containers</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Node.js/npm Commands -->
+            <div class="card" data-category="nodejs">
+                <h2>📦 Node.js & npm</h2>
+                <div class="command-group">
+                    <div class="command" onclick="copyCommand('npm install')">
+                        <div>
+                            <code>npm install</code>
+                            <span class="description">Install dependencies</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('npm run build')">
+                        <div>
+                            <code>npm run build</code>
+                            <span class="description">Build for production</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('npm run test')">
+                        <div>
+                            <code>npm run test</code>
+                            <span class="description">Run tests</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('npx playwright test')">
+                        <div>
+                            <code>npx playwright test</code>
+                            <span class="description">Run E2E tests</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Claude Code MCP -->
+            <div class="card" data-category="claude">
+                <h2>🤖 Claude Code & MCP</h2>
+                <div class="command-group">
+                    <div class="command" onclick="copyCommand('claude mcp list')">
+                        <div>
+                            <code>claude mcp list</code>
+                            <span class="description">List MCP servers</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('claude mcp add github &quot;npx -y @modelcontextprotocol/server-github@latest&quot;')">
+                        <div>
+                            <code>claude mcp add github "npx -y @modelcontextprotocol/server-github@latest"</code>
+                            <span class="description">Add GitHub MCP</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('mcp-reinstall')">
+                        <div>
+                            <code>mcp-reinstall</code>
+                            <span class="description">Reinstall all MCPs</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Commands -->
+            <div class="card" data-category="system">
+                <h2>⚙️ System Commands</h2>
+                <div class="command-group">
+                    <div class="command" onclick="copyCommand('ps aux | grep node')">
+                        <div>
+                            <code>ps aux | grep node</code>
+                            <span class="description">Find Node.js processes</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('kill -9 PID')">
+                        <div>
+                            <code>kill -9 PID</code>
+                            <span class="description">Force kill process</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('df -h')">
+                        <div>
+                            <code>df -h</code>
+                            <span class="description">Check disk space</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('free -h')">
+                        <div>
+                            <code>free -h</code>
+                            <span class="description">Check memory usage</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File Operations -->
+            <div class="card" data-category="files">
+                <h2>📄 File Operations</h2>
+                <div class="command-group">
+                    <div class="command" onclick="copyCommand('cat filename')">
+                        <div>
+                            <code>cat filename</code>
+                            <span class="description">Display file contents</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('grep &quot;pattern&quot; filename')">
+                        <div>
+                            <code>grep "pattern" filename</code>
+                            <span class="description">Search in file</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('find . -name &quot;*.js&quot;')">
+                        <div>
+                            <code>find . -name "*.js"</code>
+                            <span class="description">Find files by pattern</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('chmod +x script.sh')">
+                        <div>
+                            <code>chmod +x script.sh</code>
+                            <span class="description">Make file executable</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('dos2unix .gitattributes .gitignore .env.* .eslintrc-css-compliance.js supabase/.gitignore')">
+                        <div>
+                            <code>dos2unix .gitattributes .gitignore .env.* .eslintrc-css-compliance.js supabase/.gitignore</code>
+                            <span class="description">Fix Windows line endings to Unix (CRLF to LF)</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Command Button -->
+    <button class="add-command" onclick="showModal()">+</button>
+
+    <!-- Modal for Adding Commands -->
+    <div class="modal" id="addModal">
+        <div class="modal-content">
+            <h3>Add New Command</h3>
+            <select id="categorySelect">
+                <option value="navigation">Navigation & File Management</option>
+                <option value="git">Git</option>
+                <option value="docker">Docker</option>
+                <option value="nodejs">Node.js & npm</option>
+                <option value="claude">Claude Code & MCP</option>
+                <option value="system">System</option>
+                <option value="files">File Operations</option>
+                <option value="custom">Custom</option>
+            </select>
+            <input type="text" id="commandInput" placeholder="Command (e.g., ls -la)" />
+            <input type="text" id="descriptionInput" placeholder="Description" />
+            <div class="modal-buttons">
+                <button class="cancel-btn" onclick="hideModal()">Cancel</button>
+                <button class="save-btn" onclick="saveCommand()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load saved commands from localStorage
+        let customCommands = JSON.parse(localStorage.getItem('customCommands')) || [];
+
+        // Copy command to clipboard
+        function copyCommand(command) {
+            navigator.clipboard.writeText(command).then(() => {
+                event.target.textContent = 'Copied!';
+                event.target.classList.add('copied');
+                setTimeout(() => {
+                    event.target.textContent = 'Copy';
+                    event.target.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            
+            cards.forEach(card => {
+                const commands = card.querySelectorAll('.command');
+                let hasMatch = false;
+                
+                commands.forEach(cmd => {
+                    const text = cmd.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        cmd.style.display = 'flex';
+                        hasMatch = true;
+                    } else {
+                        cmd.style.display = 'none';
+                    }
+                });
+                
+                card.style.display = hasMatch || !searchTerm ? 'block' : 'none';
+            });
+        });
+
+        // Modal functions
+        function showModal() {
+            document.getElementById('addModal').style.display = 'flex';
+        }
+
+        function hideModal() {
+            document.getElementById('addModal').style.display = 'none';
+            document.getElementById('commandInput').value = '';
+            document.getElementById('descriptionInput').value = '';
+        }
+
+        function saveCommand() {
+            const category = document.getElementById('categorySelect').value;
+            const command = document.getElementById('commandInput').value;
+            const description = document.getElementById('descriptionInput').value;
+            
+            if (command && description) {
+                const newCommand = { category, command, description };
+                customCommands.push(newCommand);
+                localStorage.setItem('customCommands', JSON.stringify(customCommands));
+                
+                // Add to UI
+                addCommandToUI(newCommand);
+                hideModal();
+            }
+        }
+
+        function addCommandToUI(cmdObj) {
+            const card = document.querySelector(`[data-category="${cmdObj.category}"]`);
+            if (card) {
+                const commandGroup = card.querySelector('.command-group:last-child');
+                const commandDiv = document.createElement('div');
+                commandDiv.className = 'command';
+                commandDiv.setAttribute('onclick', `copyCommand('${cmdObj.command.replace(/'/g, "\\'")}')`);
+                commandDiv.innerHTML = `
+                    <div>
+                        <code>${cmdObj.command}</code>
+                        <span class="description">${cmdObj.description}</span>
+                    </div>
+                    <button class="copy-btn">Copy</button>
+                `;
+                commandGroup.appendChild(commandDiv);
+            }
+        }
+
+        // Load custom commands on page load
+        window.onload = () => {
+            customCommands.forEach(cmd => addCommandToUI(cmd));
+        };
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                hideModal();
+            }
+        });
+    </script>
+</body>
+</html>
