@@ -1571,6 +1571,11 @@
                     <path d="M7 3h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2zm5 12v2m0-6v2" stroke="#8e44ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>Claude Code Keyboard Shortcuts</h2>
                 <p style="color: var(--text-secondary); font-size: 0.9em; margin-bottom: 10px;">Essential keyboard shortcuts for efficient Claude Code usage. Switch between planning and action modes with Shift+Tab!</p>
+                <div class="warning-note">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 4px;">
+                        <path d="M12 9v4m0 4h.01M5.07 19h13.86c1.1 0 1.74-1.23 1.11-2.13L13.11 4.87a1.25 1.25 0 00-2.22 0L3.96 16.87c-.63.9.01 2.13 1.11 2.13z" stroke="#dcdcaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg><strong>Windows Users:</strong> Ctrl+Z does NOT undo! It suspends Claude (runs in background). Use 'fg' to resume or 'kill %1' to stop. Check 'jobs' for suspended processes.
+                </div>
                 <div class="command-group">
                     <h3>Keyboard Shortcuts & Modes</h3>
                     <div class="command" onclick="copyCommand('Shift+Tab')">
@@ -2060,7 +2065,7 @@
                     <div class="command" onclick="copyCommand('Ctrl+Z')">
                         <div>
                             <code>Ctrl+Z</code>
-                            <span class="description">Suspend process (still running!)</span>
+                            <span class="description">Suspend process (NOT undo! Still running in background!)</span>
                         </div>
                         <button class="copy-btn">Copy</button>
                     </div>
