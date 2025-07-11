@@ -556,24 +556,30 @@
         <div class="nav-menu">
             <h3>Quick Jump:</h3>
             <div class="nav-links">
-                <a href="#powershell">1. PowerShell WSL</a>
-                <a href="#wsl-env">2. WSL Environment</a>
-                <a href="#wsl-integration">3. WSL-Windows</a>
-                <a href="#navigation">4. Navigation</a>
-                <a href="#terminal">5. Terminal</a>
-                <a href="#claude-setup">6. Claude Setup</a>
-                <a href="#best-practices">7. Best Practices</a>
-                <a href="#file-ops">8. File Operations</a>
-                <a href="#git">9. Git</a>
-                <a href="#nodejs">10. Node.js</a>
-                <a href="#claude-power">11. Claude Power</a>
-                <a href="#claude-mcp">12. Claude MCP</a>
-                <a href="#linux-commands">13. Linux Commands</a>
-                <a href="#text-processing">14. Text Processing</a>
-                <a href="#network">15. Network</a>
-                <a href="#python">16. Python</a>
-                <a href="#ssh">17. SSH/Remote</a>
-                <a href="#compression">18. Compression</a>
+                <a href="#prompts">1. Prompts & AI Commands</a>
+                <a href="#wsl-integration">2. WSL-Windows Integration</a>
+                <a href="#best-practices">3. Claude Code Best Practices</a>
+                <a href="#file-management">4. WSL File Management</a>
+                <a href="#navigation">5. Navigation</a>
+                <a href="#git">6. Git Commands</a>
+                <a href="#claude-power">7. Claude Code Power Words</a>
+                <a href="#nodejs">8. Node.js & npm</a>
+                <a href="#claude-setup">9. Claude Code Setup</a>
+                <a href="#claude-mcp">10. Claude Code & MCP</a>
+                <a href="#claude-chat">11. Chat Interface</a>
+                <a href="#claude-shortcuts">12. Keyboard Shortcuts</a>
+                <a href="#mobile">13. Claude Code Mobile</a>
+                <a href="#powershell">14. PowerShell WSL</a>
+                <a href="#wsl-env">15. WSL Environment</a>
+                <a href="#file-ops">16. File Operations</a>
+                <a href="#linux-commands">17. Linux Commands</a>
+                <a href="#terminal">18. Terminal Management</a>
+                <a href="#file-managers">19. File Managers (MC & tmux)</a>
+                <a href="#python">20. Python Development</a>
+                <a href="#network">21. Network & Download</a>
+                <a href="#text-processing">22. Text Processing</a>
+                <a href="#compression">23. Compression</a>
+                <a href="#ssh">24. SSH & Remote</a>
             </div>
         </div>
         
@@ -620,6 +626,45 @@
         </div>
 
         <div class="grid" id="commandGrid">
+            <!-- Prompts & AI Commands -->
+            <div class="card claude-special" data-category="prompts" id="prompts">
+                <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 8px;">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#8e44ad"/>
+                </svg>Prompts & AI Commands</h2>
+                <div class="command-group">
+                    <h3>Example Claude Prompts</h3>
+                    <div class="command" onclick="copyCommand('Analyze this codebase and create a comprehensive README')">
+                        <div>
+                            <code>Analyze this codebase and create a comprehensive README</code>
+                            <span class="description">Generate project documentation</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('Refactor this function to be more efficient and add error handling')">
+                        <div>
+                            <code>Refactor this function to be more efficient and add error handling</code>
+                            <span class="description">Improve code quality</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                    <div class="command" onclick="copyCommand('Create unit tests for this component with edge cases')">
+                        <div>
+                            <code>Create unit tests for this component with edge cases</code>
+                            <span class="description">Generate comprehensive tests</span>
+                        </div>
+                        <button class="copy-btn">Copy</button>
+                    </div>
+                </div>
+                <div style="margin: 15px 0; padding: 10px; background: var(--code-bg); border-radius: 4px;">
+                    <strong style="color: var(--accent);">Add Your Own Prompts:</strong>
+                    <ul style="margin: 8px 0 0 20px; color: var(--text-secondary); font-size: 0.9em;">
+                        <li>Click the <strong>+</strong> button and select "Prompts & AI Commands"</li>
+                        <li>Save prompts you use frequently</li>
+                        <li>Build your personal prompt library</li>
+                    </ul>
+                </div>
+            </div>
+
             <!-- WSL-Windows Integration -->
             <div class="card wsl-special" data-category="wsl" id="wsl-integration">
                 <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 8px;">
@@ -1493,7 +1538,7 @@
             </div>
 
             <!-- Claude Code at Work -->
-            <div class="card claude-special" data-category="mobile">
+            <div class="card claude-special" data-category="mobile" id="mobile">
                 <h2><svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="vertical-align: middle; margin-right: 8px;">
                     <path d="M7 2h10a2 2 0 012 2v16a2 2 0 01-2 2H7a2 2 0 01-2-2V4a2 2 0 012-2zm5 18h.01" stroke="#8e44ad" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>Claude Code at Work!</h2>
@@ -2615,24 +2660,28 @@
         <div class="modal-content">
             <h3>Add New Command</h3>
             <select id="categorySelect">
+                <option value="prompts">🚀 Prompts & AI Commands</option>
                 <option value="wsl">WSL-Windows Integration</option>
+                <option value="best-practices">Claude Code Best Practices</option>
                 <option value="wsl-files">WSL File Management</option>
                 <option value="powershell-wsl">PowerShell WSL Management</option>
                 <option value="wsl-env">WSL Environment</option>
                 <option value="navigation">Navigation & File Management</option>
                 <option value="git">Git</option>
                 <option value="claude-setup">Claude Code Setup</option>
-                <option value="claude">Claude Code</option>
+                <option value="claude">Claude Code Power Words</option>
+                <option value="mobile">Claude Code Mobile (Termux)</option>
                 <option value="nodejs">Node.js & npm</option>
                 <option value="files">File Operations</option>
                 <option value="linux">Common Linux Commands</option>
                 <option value="terminal">Terminal Management</option>
+                <option value="terminal,tools">File Managers (MC & tmux)</option>
                 <option value="network">Network & Download</option>
                 <option value="text-processing">Text Processing</option>
                 <option value="compression">Compression & Archives</option>
                 <option value="ssh">SSH & Remote</option>
                 <option value="python">Python</option>
-                <option value="custom">Custom</option>
+                <option value="custom">Custom/Other</option>
             </select>
             <input type="text" id="commandInput" placeholder="Command (e.g., ls -la)" />
             <input type="text" id="descriptionInput" placeholder="Description" />
