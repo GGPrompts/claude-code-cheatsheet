@@ -23,7 +23,7 @@ This quick reference page started as a 2nd monitor cheat sheet for myself becaus
 ## 🛠️ How to Use
 
 ### Option 1: Use the Public Version
-Visit the live site (when public) to browse commands. Note that customizations won't persist on the public version.
+Visit the live site at https://ggprompts.github.io/claude-code-cheatsheet/ to browse commands. Note that customizations won't persist on the public version.
 
 ### Option 2: Create Your Own Copy (Recommended)
 
