@@ -243,6 +243,8 @@
             align-items: center;
             cursor: pointer;
             transition: background-color 0.2s;
+            position: relative;
+            overflow: hidden;
         }
 
         .command:hover {
@@ -252,12 +254,21 @@
         .command code {
             color: var(--success);
             font-size: 0.95em;
+            word-break: break-word;
+            flex-shrink: 1;
         }
 
+        .command > div:first-child {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+        }
+        
         .command .description {
             color: var(--text-secondary);
             font-size: 0.9em;
             margin-left: 15px;
+            display: block;
         }
 
         .copy-btn {
@@ -269,6 +280,8 @@
             cursor: pointer;
             font-size: 0.8em;
             transition: background-color 0.2s;
+            flex-shrink: 0;
+            margin-left: 10px;
         }
 
         .copy-btn:hover {
