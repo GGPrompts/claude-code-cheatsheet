@@ -1,6 +1,6 @@
 # Claude Code WSL Quick Reference
 
-A comprehensive, interactive cheat sheet for developers using Claude Code with WSL (Windows Subsystem for Linux). This reference guide includes essential commands for Claude Code, WSL, terminal operations, Git, and more.
+This quick reference page started as a 2nd monitor cheat sheet for myself because I have the memory of a goldfish and would sometimes stare at my terminal, utterly clueless. I'm sharing it in case it helps other Claude Code users who are new to WSL and Linux commands. Feel free to customize it and make it your own!
 
 ## ✨ Features
 
