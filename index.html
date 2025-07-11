@@ -332,6 +332,49 @@
             background: var(--accent-hover);
         }
 
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            color: var(--text-primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s, opacity 0.3s, background-color 0.2s;
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .back-to-top:hover {
+            transform: scale(1.1);
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 768px) {
+            .back-to-top {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                left: 20px;
+            }
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -1296,7 +1339,7 @@
                         </div>
                         <button class="copy-btn">Copy</button>
                     </div>
-                    <div class="command" onclick="copyCommand('echo &quot;alias quickref=\'/mnt/c/Program Files/Google/Chrome/Application/chrome.exe\' \\&quot;file://wsl.localhost/Ubuntu/home/matt/projects/claude-quick-reference-wsl.html\\&quot;&quot; >> ~/.bashrc && source ~/.bashrc')">
+                    <div class="command" onclick="copyCommand('echo &quot;alias quickref=\'/mnt/c/Program Files/Google/Chrome/Application/chrome.exe\' \\&quot;file://wsl.localhost/Ubuntu/home/<span class=\'wsl-username\'>YourWSLUsername</span>/projects/claude-quick-reference-wsl.html\\&quot;&quot; >> ~/.bashrc && source ~/.bashrc')">
                         <div>
                             <code>echo "alias quickref='...'" >> ~/.bashrc && source ~/.bashrc</code>
                             <span class="description">Add quickref alias to open this page</span>
@@ -2679,6 +2722,9 @@
     <!-- Add Command Button -->
     <button class="add-command" onclick="showModal()">+</button>
 
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()" title="Back to navigation">↑</button>
+
     <!-- Modal for Adding Commands -->
     <div class="modal" id="addModal">
         <div class="modal-content">
@@ -2881,6 +2927,26 @@
                 hideModal();
             }
         });
+
+        // Back to Top Button functionality
+        const backToTopButton = document.getElementById('backToTop');
+        
+        // Show/hide button based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        // Smooth scroll to top
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
     </script>
 </body>
 </html>
